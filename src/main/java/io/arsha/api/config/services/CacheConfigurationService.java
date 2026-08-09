@@ -18,6 +18,4 @@ public class CacheConfigurationService {
     public Long getTtl() {
         return cacheProperties.getTtl();
     }
-
-
 }
