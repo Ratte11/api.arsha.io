@@ -7,14 +7,20 @@ import lombok.Data;
 
 @Data
 public class RedisProperties {
-    Integer port = 6379;
-    String host = "localhost"; // "redis.service.arsha";
-    /// Password for Redis connection, ignored if blank.
-    String password = "";
 
-    /// Redisson expects a null password to mean "no password", so we return null if the password is blank.
+    private Integer port = 6379;
+
+    private String host = "localhost";
+
+    private String password = "";
+
+    /**
+     * Redisson expects null when no password is configured.
+     */
     @Nullable
     public String getPassword() {
-        return  Optional.of(password).filter(StringUtils::isNotBlank).orElse(null);
+        return Optional.ofNullable(password)
+                .filter(StringUtils::isNotBlank)
+                .orElse(null);
     }
 }
