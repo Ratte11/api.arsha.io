@@ -76,6 +76,6 @@ public class MarketRedisService {
     }
 
     private Duration getDefaultTtl() {
-        return Duration.ofMinutes(configService.getTtl());
+        return Duration.ofSeconds(configService.getTtl());
     }
 }
