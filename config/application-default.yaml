@@ -27,8 +27,8 @@ docs: "https://documenter.getpostman.com/view/4028519/2s9Y5YRhp4#674b362e-2a27-4
 # Redis / Valkey config
 cache:
   redis:
-    host: ${CACHE_REDIS_HOST:localhost}
-    port: ${CACHE_REDIS_PORT:6379}
+    host: redis://red-d9rsd5qjobas73e4us4g:t0eiyxVJxjnaEuSbH4vcTfKylcLapljz@red-d9rsd5qjobas73e4us4g:6379
+    port: 6379
     password: ${CACHE_REDIS_PASSWORD:}
     ttl: 30
 
