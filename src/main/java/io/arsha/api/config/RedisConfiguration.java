@@ -27,59 +27,125 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @EnableCaching
-@EnableRedisRepositories(enableKeyspaceEvents = EnableKeyspaceEvents.ON_STARTUP)
+@EnableRedisRepositories(
+        enableKeyspaceEvents = EnableKeyspaceEvents.ON_STARTUP
+)
 public class RedisConfiguration {
 
     @Bean
-    public RedissonClient redissonClient(CacheConfigurationService properties, ExecutorService asyncExecutor) {
+    public RedissonClient redissonClient(
+            CacheConfigurationService properties,
+            ExecutorService asyncExecutor
+    ) {
         var redisProperties = properties.getRedisConfig();
 
         var config = new Config();
-        var host = "redis://%s:%d".formatted(redisProperties.getHost(), redisProperties.getPort());
+
+        var host = "redis://%s:%d".formatted(
+                redisProperties.getHost(),
+                redisProperties.getPort()
+        );
+
         var password = redisProperties.getPassword();
-        config.setExecutor(asyncExecutor).useSingleServer().setAddress(host).setPassword(password);
+
+        config
+                .setExecutor(asyncExecutor)
+                .useSingleServer()
+                .setAddress(host)
+                .setPassword(password);
 
         return Redisson.create(config);
     }
 
     @Bean
-    public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redissonClient) {
+    public RedissonConnectionFactory redissonConnectionFactory(
+            RedissonClient redissonClient
+    ) {
         return new RedissonConnectionFactory(redissonClient);
     }
 
     @Bean
-    public RedisTemplate<CacheCompositeKey, MarketResponse> marketRedisTemplate(RedisConnectionFactory cf) {
-        var template = new RedisTemplate<CacheCompositeKey, MarketResponse>();
+    public RedisTemplate<CacheCompositeKey, MarketResponse>
+    marketRedisTemplate(
+            RedisConnectionFactory cf
+    ) {
+        var template =
+                new RedisTemplate<CacheCompositeKey, MarketResponse>();
+
         template.setConnectionFactory(cf);
-        template.setHashKeySerializer(new CacheCompositeKeyRedisSerializer());
-        template.setKeySerializer(new CacheCompositeKeyRedisSerializer());
-        template.setValueSerializer(new MarketResponseValueRedisSerializer());
-        template.setHashValueSerializer(new MarketResponseValueRedisSerializer());
+
+        template.setHashKeySerializer(
+                new CacheCompositeKeyRedisSerializer()
+        );
+
+        template.setKeySerializer(
+                new CacheCompositeKeyRedisSerializer()
+        );
+
+        template.setValueSerializer(
+                new MarketResponseValueRedisSerializer()
+        );
+
+        template.setHashValueSerializer(
+                new MarketResponseValueRedisSerializer()
+        );
+
         return template;
     }
 
     @Bean
-    public RedisTemplate<String, ScrapedItem> dbRedisTemplate(RedisConnectionFactory cf) {
-        var template = new RedisTemplate<String, ScrapedItem>();
+    public RedisTemplate<String, ScrapedItem>
+    dbRedisTemplate(
+            RedisConnectionFactory cf
+    ) {
+        var template =
+                new RedisTemplate<String, ScrapedItem>();
+
         template.setConnectionFactory(cf);
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new ScrapedItemValueRedisSerializer());
-        template.setHashValueSerializer(new ScrapedItemValueRedisSerializer());
+
+        template.setHashKeySerializer(
+                new StringRedisSerializer()
+        );
+
+        template.setKeySerializer(
+                new StringRedisSerializer()
+        );
+
+        template.setValueSerializer(
+                new ScrapedItemValueRedisSerializer()
+        );
+
+        template.setHashValueSerializer(
+                new ScrapedItemValueRedisSerializer()
+        );
+
         return template;
     }
 
     @Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
-        MessageListenerAdapter listenerAdapter) {
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.addMessageListener(listenerAdapter, new PatternTopic("__keyevent@*__:expired"));
+    RedisMessageListenerContainer container(
+            RedisConnectionFactory connectionFactory,
+            MessageListenerAdapter listenerAdapter
+    ) {
+        RedisMessageListenerContainer container =
+                new RedisMessageListenerContainer();
+
+        container.setConnectionFactory(
+                connectionFactory
+        );
+
+        container.addMessageListener(
+                listenerAdapter,
+                new PatternTopic("__keyevent@*__:expired")
+        );
+
         return container;
     }
 
     @Bean
-    MessageListenerAdapter listenerAdapter(MessageListener listener) {
+    MessageListenerAdapter listenerAdapter(
+            MessageListener listener
+    ) {
         return new MessageListenerAdapter(listener);
     }
 }
