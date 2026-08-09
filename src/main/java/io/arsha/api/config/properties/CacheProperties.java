@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "cache")
 public class CacheProperties {
-    private Long ttl = 30L; // 30 minutes
+
+    private Long ttl = 30L;
+
     private RedisProperties redis = new RedisProperties();
 }
