@@ -30,7 +30,7 @@ cache:
     host: ${red-d9s9rb49v7es73eh3s10}
     port: ${CACHE_REDIS_PORT:6379}
     password: ${l0AOiejD2LKLHL0proj9Bpi8M4aH89Zu:}
-    ttl: 5
+    ttl: 1
 
 
 # Logging
