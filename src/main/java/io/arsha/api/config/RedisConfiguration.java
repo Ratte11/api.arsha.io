@@ -28,7 +28,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
 @EnableRedisRepositories(
-        enableKeyspaceEvents = EnableKeyspaceEvents.ON_STARTUP
+        enableKeyspaceEvents = EnableKeyspaceEvents.OFF
 )
 public class RedisConfiguration {
 
