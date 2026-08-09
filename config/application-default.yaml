@@ -1,36 +1,44 @@
 # Runtime config
 server:
-  port: 10000
+  port: ${PORT:10000}
   address: 0.0.0.0
   compression:
     enabled: true
+
 spring:
   devtools:
     livereload:
       enabled: false
     add-properties: false
+
   threads:
     virtual:
       enabled: true
+
   docker:
     compose:
       enabled: false
 
-# REST documentation URL for redirect
+
+# REST documentation URL
 docs: "https://documenter.getpostman.com/view/4028519/2s9Y5YRhp4#674b362e-2a27-4961-ac07-dfb925aee842"
 
-# Redis config
+
+# Redis / Valkey config
 cache:
   redis:
-    host: redis
-    port: 6379
-  ttl: 30
+    host: ${CACHE_REDIS_HOST:localhost}
+    port: ${CACHE_REDIS_PORT:6379}
+    password: ${CACHE_REDIS_PASSWORD:}
+    ttl: 30
+
 
 # Logging
 logging:
   level:
     io.arsha.api: INFO
     web: ERROR
+
 
 # BDOCodex config
 codex:
@@ -52,47 +60,61 @@ codex:
     - "tw"
     - "gl"
 
+
 # Configure marketplace regions
 marketplace:
   na:
     enabled: true
     url: "na-trade.naeu.playblackdesert.com"
+
   eu:
     enabled: true
     url: "eu-trade.naeu.playblackdesert.com"
+
   sea:
     enabled: true
     url: "asia-trade.blackdesert.pearlabyss.com"
+
   mena:
     enabled: true
     url: "trade.mena.playblackdesert.com"
+
   kr:
     enabled: true
     url: "trade.kr.playblackdesert.com"
+
   ru:
     enabled: true
     url: "trade.ru.playblackdesert.com"
+
   jp:
     enabled: true
     url: "trade.jp.playblackdesert.com"
+
   th:
     enabled: true
     url: "asia-trade.blackdesert.pearlabyss.com"
+
   tw:
     enabled: true
     url: "trade.tw.playblackdesert.com"
+
   sa:
     enabled: true
     url: "trade.sa.playblackdesert.com"
+
   gl:
     enabled: true
     url: "trade.global-lab.playblackdesert.com"
+
   console.na:
     enabled: true
     url: "console-na-trade.blackdesert.pearlabyss.com"
+
   console.eu:
     enabled: true
     url: "console-eu-trade.blackdesert.pearlabyss.com"
+
   console.asia:
     enabled: true
     url: "console-asia-trade.blackdesert.pearlabyss.com"
